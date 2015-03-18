@@ -1,0 +1,11 @@
+{
+  "name": "generator-babylon",
+  "version": "0.1.1",
+  "dependencies": {
+	  "gulp": "^3.8.11",
+	  "browser-sync": "^2.2.1",
+	  "wiredep": "^2.2.2",
+	  "gulp-useref": "^1.1.1",
+	  "main-bower-files": "^2.5.0"
+  }
+}
