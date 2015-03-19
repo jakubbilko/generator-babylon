@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // Now create a basic Babylon Scene object 
     var scene = new BABYLON.Scene(engine);
 
-    // Change the scene background color to green.
-    scene.clearColor = new BABYLON.Color3(0, 1, 0);
+    // Change the scene background color to black.
+    scene.clearColor = new BABYLON.Color3(0, 0, 0);
 
     // This creates and positions a free camera
     var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);

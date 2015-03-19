@@ -41,9 +41,6 @@ module.exports = yeoman.generators.Base.extend({
 	  this.mkdir("app/assets");
 	  this.mkdir("app/css");
 	  this.mkdir("dist");
-	  this.mkdir("dist/scripts");
-	  this.mkdir("dist/assets");
-	  this.mkdir("dist/css");
       this.fs.copy(this.templatePath('_package.json'), this.destinationPath('package.json'));
       this.fs.copy(this.templatePath('_gulpfile.js'), this.destinationPath('gulpfile.js'));
       this.fs.copy(this.templatePath('_babylon.js'), this.destinationPath('app/scripts/babylon.js'));
