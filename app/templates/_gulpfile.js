@@ -6,12 +6,28 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     minifyCss = require('gulp-minify-css'),
-    merge = require('merge-stream');
+    merge = require('merge-stream'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
+    gutil = require('gulp-util'),
+    sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('wiredep', function() {
-	gulp.src('./app/index.html')
-	    .pipe(wiredep())
-	    .pipe(gulp.dest('./app'));
+gulp.task('js', function () {
+	var b = browserify({
+		entries: 'app/scripts/main.js',
+		debug: true,
+		noParse: ['babylonjs']
+	});
+
+	return b.bundle()
+	        .pipe(source('app.js'))
+	        .pipe(buffer())
+	        .pipe(sourcemaps.init({loadMaps: true}))
+	        .pipe(uglify())
+	        .on('error', gutil.log)
+	        .pipe(sourcemaps.write('./'))
+	        .pipe(gulp.dest('./dist/scripts/'));
 });
 
 gulp.task('serve', function() {
@@ -19,7 +35,7 @@ gulp.task('serve', function() {
 		notify: false,
 		port: 9000,
 		server: {
-			baseDir: 'app',
+			baseDir: 'dist',
 			routes: {
 				'/bower_components': 'bower_components'
 			}
