@@ -11,22 +11,22 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     gutil = require('gulp-util'),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    isProduction = (process.env.ENV === 'production');
 
 gulp.task('js', function () {
 	var b = browserify({
 		entries: 'app/scripts/main.js',
 		debug: true,
-		noParse: ['babylonjs']
+		noParse: [require.resolve('babylonjs')]
 	});
-
 	return b.bundle()
 	        .pipe(source('app.js'))
-	        .pipe(buffer())
-	        .pipe(sourcemaps.init({loadMaps: true}))
-	        .pipe(uglify())
-	        .on('error', gutil.log)
-	        .pipe(sourcemaps.write('./'))
+	        // Minification takes an extremely long time, so you have to set ENV=production in the environment
+	        .pipe(gulpif(isProduction, buffer()))
+	        .pipe(gulpif(isProduction, sourcemaps.init({loadMaps: true})))
+	        .pipe(gulpif(isProduction, uglify()))
+	        .pipe(gulpif(isProduction, sourcemaps.write('./')))
 	        .pipe(gulp.dest('./dist/scripts/'));
 });
 
