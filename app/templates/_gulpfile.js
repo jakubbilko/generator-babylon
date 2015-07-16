@@ -14,6 +14,17 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     isProduction = (process.env.ENV === 'production');
 
+gulp.task('html', function() {
+	return gulp.src('app/*.html')
+	           .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('css', function() {
+	return gulp.src('app/css/*.css')
+	           .pipe(gulpif(isProduction, minifyCss()))
+	           .pipe(gulp.dest('dist/css'));
+});
+
 gulp.task('js', function () {
 	var b = browserify({
 		entries: 'app/scripts/main.js',
@@ -30,19 +41,25 @@ gulp.task('js', function () {
 	        .pipe(gulp.dest('./dist/scripts/'));
 });
 
-gulp.task('serve', function() {
+gulp.task('watch', function() {
+	gulp.watch('app/*.html', ['html']);
+	gulp.watch('app/css/*.css', ['css']);
+	gulp.watch('app/*.js', ['js']);
+	gulp.watch('app/assets/*', ['assets']);
+});
+
+gulp.task('browserSync', ['build'], function() {
 	browserSync({
 		notify: false,
 		port: 9000,
 		server: {
-			baseDir: 'dist',
-			routes: {
-				'/bower_components': 'bower_components'
-			}
+			baseDir: 'dist'
 		}
 	});
-	gulp.watch(['app/*.html', 'app/scripts/*.js', 'app/css/*.css']).on('change', reload);
-	gulp.watch('bower.json', ['wiredep']);
+});
+
+gulp.task('serve', ['browserSync', 'watch'], function() {
+	gulp.watch(['dist/*.html', 'dist/scripts/*.js', 'dist/css/*.css']).on('change', reload);
 });
 
 gulp.task('assets', function() {
@@ -51,18 +68,5 @@ gulp.task('assets', function() {
 
 gulp.task('clean', require('del').bind(null, ['dist']));
 
-gulp.task('dist', ['clean'], function() {
-	var assets = useref.assets();
+gulp.task('build', ['html', 'css', 'js', 'assets']);
 
-	var stream1 = gulp.src('app/*.html')
-	                  .pipe(assets)
-	                  .pipe(gulpif('*.js', uglify()))
-	                  .pipe(gulpif('*.css', minifyCss()))
-	                  .pipe(assets.restore())
-	                  .pipe(useref())
-	                  .pipe(gulp.dest('dist'));
-
-	var stream2 = gulp.src('app/assets/**/*').pipe(gulp.dest('dist/assets/'));
-
-	return merge(stream1, stream2);
-});
