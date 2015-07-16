@@ -46,7 +46,6 @@ module.exports = yeoman.generators.Base.extend({
       if(this.demo) this.fs.copy(this.templatePath('_main_demo.js'), this.destinationPath('app/scripts/main.js'));
       else this.fs.copy(this.templatePath('_main.js'), this.destinationPath('app/scripts/main.js'));
       this.fs.copy(this.templatePath('_style.css'), this.destinationPath('app/css/style.css'));
-      this.fs.copy(this.templatePath('_bower.json'), this.destinationPath('bower.json'));
       this.fs.copyTpl(this.templatePath('_index.html'), this.destinationPath('app/index.html'), { project_name: this.project_name });
     },
 
