@@ -69,4 +69,3 @@ gulp.task('assets', function() {
 gulp.task('clean', require('del').bind(null, ['dist']));
 
 gulp.task('build', ['html', 'css', 'js', 'assets']);
-
