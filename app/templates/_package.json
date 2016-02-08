@@ -1,6 +1,6 @@
 {
   "name": "generator-babylon",
-  "version": "0.0.2",
+  "version": "0.2.3",
   "dependencies": {
 	  "gulp": "^3.8.11",
 	  "browser-sync": "^2.2.1",
@@ -13,7 +13,7 @@
 	  "del": "^1.1.1",
 	  "merge-stream": "^0.1.7",
 	  "browserify": "^10.2.4",
-	  "babylonjs": "^2.1.2",
+	  "babylonjs": "^2.3.0",
 	  "gulp-sourcemaps": "^1.5.2",
 	  "gulp-util": "^3.0.6",
 	  "vinyl-buffer": "^1.0.0",
