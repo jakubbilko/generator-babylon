@@ -1,16 +1,14 @@
+'use strict';
+
 var gulp = require('gulp'),
-    wiredep = require('wiredep').stream,
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
-    useref = require('gulp-useref'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     minifyCss = require('gulp-minify-css'),
-    merge = require('merge-stream'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
-    gutil = require('gulp-util'),
     sourcemaps = require('gulp-sourcemaps'),
     isProduction = (process.env.ENV === 'production');
 
